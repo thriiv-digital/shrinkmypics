@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shrink My Pics — Free Image Resizer & Converter (WebP, JPG, PNG)</title>
+<meta name="description" content="Shrink My Pics resizes and converts images to WebP, JPG, or PNG instantly in your browser. No upload, no signup, 100% free.">
+<link rel="canonical" href="https://shrinkmypics.com/">
+<meta property="og:title" content="Shrink My Pics — Free Image Resizer & Converter">
+<meta property="og:description" content="Resize and convert images to WebP, JPG, or PNG instantly in your browser. No upload, no signup, 100% free.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://shrinkmypics.com/">
+<style>
+  :root{
+    --bg:#0b0d12; --bg2:#0f1218; --panel:#151923; --panel2:#1b202c; --border:#262c3a;
+    --text:#eef0f5; --muted:#9aa1b1; --accent:#6d8bff; --accent2:#8f6dff; --accent-hover:#597af5;
+    --good:#3ecf8e; --good-bg:rgba(62,207,142,0.12);
+    --shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#f3f5fb; --bg2:#eef1f9; --panel:#ffffff; --panel2:#f7f8fc; --border:#e3e6f0;
+      --text:#161a24; --muted:#666d80; --accent:#4f6bff; --accent2:#7b4fff; --accent-hover:#3d58e8;
+      --good:#1f9d6d; --good-bg:rgba(31,157,109,0.1);
+      --shadow: 0 10px 30px -12px rgba(30,40,80,0.18);
+    }
+  }
+  *{box-sizing:border-box;}
+  html,body{ height:100%; }
+  body{
+    margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(900px 500px at 15% -10%, rgba(109,139,255,0.16), transparent 60%),
+      radial-gradient(700px 500px at 100% 0%, rgba(143,109,255,0.13), transparent 55%),
+      var(--bg);
+    color:var(--text); min-height:100vh; -webkit-font-smoothing:antialiased;
+  }
+  header{ text-align:center; padding:64px 20px 28px; }
+  .badge{
+    display:inline-flex; align-items:center; gap:6px; font-size:0.72rem; font-weight:700;
+    letter-spacing:.04em; text-transform:uppercase; color:var(--accent);
+    background:rgba(109,139,255,0.12); border:1px solid rgba(109,139,255,0.25);
+    padding:5px 12px; border-radius:999px; margin-bottom:18px;
+  }
+  header h1{
+    margin:0 0 12px; font-size:clamp(1.9rem,4vw,2.6rem); font-weight:800; letter-spacing:-0.02em;
+    background:linear-gradient(135deg, var(--text) 20%, var(--accent) 100%);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  header p{ margin:0 auto; color:var(--muted); max-width:520px; line-height:1.5; }
+  .layout{ max-width:1100px; margin:0 auto; padding:20px; display:grid; grid-template-columns:1fr; gap:22px; }
+  .ad-slot{
+    background:var(--panel); border:1px dashed var(--border); border-radius:12px;
+    display:flex; align-items:center; justify-content:center; color:var(--muted);
+    font-size:0.78rem; min-height:90px;
+  }
+  .ad-slot.top{ max-width:728px; margin:0 auto; width:100%; }
+  .card{
+    background:var(--panel); border:1px solid var(--border); border-radius:18px; padding:28px;
+    box-shadow:var(--shadow);
+  }
+  #dropzone{
+    border:2px dashed var(--border); border-radius:14px; padding:52px 20px;
+    text-align:center; cursor:pointer; transition:.2s ease; color:var(--muted);
+    background:var(--panel2); position:relative; overflow:hidden;
+  }
+  #dropzone:hover{ border-color:var(--accent); }
+  #dropzone.drag{
+    border-color:var(--accent); background:rgba(109,139,255,0.08); color:var(--text);
+    transform:scale(1.01);
+  }
+  #dropzone .icon{ font-size:2.1rem; display:block; margin-bottom:10px; }
+  #dropzone strong{ color:var(--text); font-size:1.05rem; }
+  input[type=file]{ display:none; }
+  .controls{ display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:16px; margin-top:22px; }
+  .field label{ display:block; font-size:0.78rem; color:var(--muted); margin-bottom:6px; font-weight:600; }
+  select, input[type=number]{
+    width:100%; padding:10px 12px; border-radius:9px; border:1px solid var(--border);
+    background:var(--bg2); color:var(--text); font-size:0.95rem; transition:.15s;
+  }
+  select:focus, input[type=number]:focus{ outline:none; border-color:var(--accent); }
+  .field.checkbox{ display:flex; align-items:center; gap:8px; flex-direction:row; margin-top:auto; }
+  .field.checkbox label{ margin:0; color:var(--text); font-size:0.9rem; font-weight:500; }
+  .slider-row{ display:flex; align-items:center; gap:10px; }
+  input[type=range]{
+    flex:1; -webkit-appearance:none; height:6px; border-radius:999px;
+    background:linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:16px; height:16px; border-radius:50%;
+    background:#fff; border:2px solid var(--accent); cursor:pointer;
+  }
+  .btn{
+    background:linear-gradient(135deg, var(--accent), var(--accent2)); color:#fff; border:none;
+    padding:12px 22px; border-radius:10px; font-size:0.95rem; cursor:pointer; font-weight:700;
+    transition:.15s; box-shadow:0 6px 16px -6px rgba(109,139,255,0.55);
+  }
+  .btn:hover{ filter:brightness(1.08); transform:translateY(-1px); }
+  .btn:active{ transform:translateY(0); }
+  .btn:disabled{ opacity:0.4; cursor:not-allowed; transform:none; box-shadow:none; }
+  .btn.secondary{ background:var(--panel2); border:1px solid var(--border); color:var(--text); box-shadow:none; }
+  .btn.secondary:hover{ border-color:var(--accent); filter:none; }
+  .actions{ display:flex; gap:10px; margin-top:22px; flex-wrap:wrap; align-items:center; }
+  .progress-wrap{ flex:1; min-width:140px; height:8px; border-radius:999px; background:var(--panel2); overflow:hidden; display:none; }
+  .progress-wrap.active{ display:block; }
+  .progress-bar{ height:100%; width:0%; background:linear-gradient(90deg, var(--accent), var(--accent2)); transition:width .2s; }
+  .summary{
+    display:none; margin-top:22px; padding:16px 20px; border-radius:12px;
+    background:var(--good-bg); border:1px solid rgba(62,207,142,0.3); align-items:center;
+    gap:14px; flex-wrap:wrap;
+  }
+  .summary.active{ display:flex; }
+  .summary strong{ color:var(--good); font-size:1.05rem; }
+  .summary span{ color:var(--muted); font-size:0.85rem; }
+  .results{ margin-top:24px; display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px; }
+  .result-card{
+    border:1px solid var(--border); border-radius:14px; overflow:hidden; background:var(--panel2);
+    transition:.2s; animation:pop .3s ease both;
+  }
+  .result-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); border-color:var(--accent); }
+  @keyframes pop{ from{ opacity:0; transform:translateY(8px) scale(.98); } to{ opacity:1; transform:none; } }
+  .result-card .thumb{ position:relative; }
+  .result-card img{ width:100%; display:block; aspect-ratio:1/1; object-fit:contain; background:repeating-conic-gradient(#00000012 0% 25%, transparent 0% 50%) 50%/16px 16px; }
+  .result-meta{ padding:12px 14px; font-size:0.8rem; color:var(--muted); }
+  .result-meta .name{ color:var(--text); font-weight:700; display:block; margin-bottom:4px; word-break:break-all; font-size:0.85rem; }
+  .savings{ color:var(--good); font-weight:700; }
+  .result-actions{ padding:0 14px 14px; display:flex; gap:8px; }
+  .result-actions .btn{ flex:1; padding:9px; font-size:0.82rem; }
+  footer{ text-align:center; color:var(--muted); font-size:0.8rem; padding:36px 20px 56px; }
+  .hint{ font-size:0.78rem; color:var(--muted); margin-top:16px; line-height:1.5; }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="badge">✨ 100% Free · No Signup</span>
+  <h1>Shrink My Pics</h1>
+  <p>Resize and convert to WebP, JPG, or PNG — instantly, right in your browser. Nothing is ever uploaded anywhere.</p>
+</header>
+
+<div class="layout">
+  <div class="ad-slot top">Ad slot (e.g. 728×90 leaderboard)</div>
+
+  <div class="card">
+    <div id="dropzone">
+      <span class="icon">📥</span>
+      <strong>Click to choose images</strong> or drag &amp; drop them here<br>
+      <span class="hint">JPG, PNG, WebP, GIF — multiple files supported</span>
+      <input type="file" id="fileInput" accept="image/*" multiple>
+    </div>
+
+    <div class="controls">
+      <div class="field">
+        <label for="maxWidth">Max width (px)</label>
+        <input type="number" id="maxWidth" value="1200" min="1">
+      </div>
+      <div class="field">
+        <label for="maxHeight">Max height (px)</label>
+        <input type="number" id="maxHeight" value="1200" min="1">
+      </div>
+      <div class="field">
+        <label for="format">Output format</label>
+        <select id="format">
+          <option value="image/webp">WebP</option>
+          <option value="image/jpeg">JPG</option>
+          <option value="image/png">PNG</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="quality">Quality (<span id="qualityVal">80</span>%)</label>
+        <div class="slider-row">
+          <input type="range" id="quality" min="10" max="100" value="80">
+        </div>
+      </div>
+      <div class="field checkbox">
+        <input type="checkbox" id="keepAspect" checked>
+        <label for="keepAspect">Keep aspect ratio (fit within box)</label>
+      </div>
+      <div class="field checkbox">
+        <input type="checkbox" id="hqMode" checked>
+        <label for="hqMode">High-quality compression <span id="hqStatus" class="hint" style="margin:0 0 0 4px;">(loading…)</span></label>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn" id="processBtn" disabled>Resize &amp; Convert</button>
+      <button class="btn secondary" id="downloadAllBtn" disabled>Download All</button>
+      <button class="btn secondary" id="clearBtn" disabled>Clear</button>
+      <div class="progress-wrap" id="progressWrap"><div class="progress-bar" id="progressBar"></div></div>
+    </div>
+
+    <div class="summary" id="summary">
+      <strong id="summaryPct">—</strong>
+      <span id="summaryDetail"></span>
+    </div>
+
+    <p class="hint">Everything happens locally on your device — no image ever leaves your browser. Safari on older iOS may not support WebP encoding; use JPG there instead.</p>
+
+    <div class="results" id="results"></div>
+  </div>
+
+  <div class="ad-slot">Ad slot (e.g. 300×250 or responsive, below results)</div>
+
+  <div class="card" id="about">
+    <h2 style="margin-top:0;">About Shrink My Pics</h2>
+    <p class="hint" style="font-size:0.9rem;">
+      Shrink My Pics is a free browser-based tool for resizing and converting images to WebP, JPG, or PNG.
+      Everything runs locally using your browser's own image-processing engine and a WebAssembly build of the
+      same compression libraries (libwebp, mozjpeg) used by tools like Google's Squoosh — so your files never
+      leave your device and there's no upload wait.
+    </p>
+    <h3 style="margin-bottom:6px;">FAQ</h3>
+    <p class="hint" style="font-size:0.9rem;"><strong>Is it really free?</strong> Yes, no signup, no limits, no watermark.</p>
+    <p class="hint" style="font-size:0.9rem;"><strong>Do you store my images?</strong> No — images are processed entirely in your browser and never uploaded to a server.</p>
+    <p class="hint" style="font-size:0.9rem;"><strong>Why is my file bigger after converting to PNG?</strong> PNG is lossless, so highly detailed photos compress worse than WebP/JPG. Use WebP or JPG for photos, PNG for graphics/screenshots with flat colors or transparency.</p>
+  </div>
+</div>
+
+<footer>
+  Free, no signup, no upload. Images are processed entirely in your browser using the Canvas API.<br>
+  <a href="/about.html" style="color:inherit;">About</a> · <a href="/privacy.html" style="color:inherit;">Privacy Policy</a> · <a href="/terms.html" style="color:inherit;">Terms</a>
+</footer>
+
+<script type="importmap">
+{
+  "imports": {
+    "wasm-feature-detect": "https://cdn.jsdelivr.net/npm/wasm-feature-detect@1.6.1/dist/esm/index.js"
+  }
+}
+</script>
+<script type="module">
+  // Real libwebp/mozjpeg WASM codecs (same ones Squoosh uses) — loaded lazily from jsDelivr.
+  // Falls back to the browser's built-in canvas encoder if this fails to load (e.g. offline, CDN blocked).
+  window.__hq = { ready: false };
+  (async () => {
+    try {
+      const [{ default: encodeWebp }, { default: encodeJpeg }] = await Promise.all([
+        import('https://cdn.jsdelivr.net/npm/@jsquash/webp@1.4.0/encode.js'),
+        import('https://cdn.jsdelivr.net/npm/@jsquash/jpeg@1.4.0/encode.js'),
+      ]);
+      window.__hq.encodeWebp = encodeWebp;
+      window.__hq.encodeJpeg = encodeJpeg;
+      window.__hq.ready = true;
+      window.dispatchEvent(new Event('hq-codecs-ready'));
+    } catch (err) {
+      console.warn('High-quality codecs failed to load, falling back to browser encoder:', err);
+      window.dispatchEvent(new Event('hq-codecs-failed'));
+    }
+  })();
+</script>
+<script>
+(function(){
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+  const processBtn = document.getElementById('processBtn');
+  const downloadAllBtn = document.getElementById('downloadAllBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const results = document.getElementById('results');
+  const qualitySlider = document.getElementById('quality');
+  const qualityVal = document.getElementById('qualityVal');
+  const formatSelect = document.getElementById('format');
+  const progressWrap = document.getElementById('progressWrap');
+  const progressBar = document.getElementById('progressBar');
+  const summary = document.getElementById('summary');
+  const summaryPct = document.getElementById('summaryPct');
+  const summaryDetail = document.getElementById('summaryDetail');
+  const dzText = dropzone.querySelector('strong');
+  const hqMode = document.getElementById('hqMode');
+  const hqStatus = document.getElementById('hqStatus');
+
+  let files = [];
+  let processedBlobs = []; // {name, blob, url, origSize, newSize}
+
+  window.addEventListener('hq-codecs-ready', () => {
+    hqStatus.textContent = '(libwebp/mozjpeg loaded)';
+  });
+  window.addEventListener('hq-codecs-failed', () => {
+    hqStatus.textContent = '(unavailable — using browser encoder)';
+    hqMode.checked = false;
+    hqMode.disabled = true;
+  });
+
+  qualitySlider.addEventListener('input', () => qualityVal.textContent = qualitySlider.value);
+
+  dropzone.addEventListener('click', () => fileInput.click());
+  dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('drag'); });
+  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag'));
+  dropzone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropzone.classList.remove('drag');
+    addFiles(e.dataTransfer.files);
+  });
+  fileInput.addEventListener('change', () => addFiles(fileInput.files));
+
+  function addFiles(fileList){
+    const imgs = Array.from(fileList).filter(f => f.type.startsWith('image/'));
+    files = files.concat(imgs);
+    processBtn.disabled = files.length === 0;
+    clearBtn.disabled = files.length === 0;
+    dzText.textContent = `${files.length} file${files.length === 1 ? '' : 's'} selected`;
+  }
+
+  clearBtn.addEventListener('click', () => {
+    files = [];
+    processedBlobs.forEach(p => URL.revokeObjectURL(p.url));
+    processedBlobs = [];
+    results.innerHTML = '';
+    processBtn.disabled = true;
+    clearBtn.disabled = true;
+    downloadAllBtn.disabled = true;
+    summary.classList.remove('active');
+    dzText.textContent = 'Click to choose images';
+    fileInput.value = '';
+  });
+
+  processBtn.addEventListener('click', async () => {
+    processBtn.disabled = true;
+    processBtn.textContent = 'Processing…';
+    results.innerHTML = '';
+    summary.classList.remove('active');
+    processedBlobs.forEach(p => URL.revokeObjectURL(p.url));
+    processedBlobs = [];
+
+    progressWrap.classList.add('active');
+    progressBar.style.width = '0%';
+
+    const maxW = parseInt(document.getElementById('maxWidth').value, 10) || 1200;
+    const maxH = parseInt(document.getElementById('maxHeight').value, 10) || 1200;
+    const keepAspect = document.getElementById('keepAspect').checked;
+    const format = formatSelect.value;
+    const quality = parseInt(qualitySlider.value, 10) / 100;
+    const ext = format === 'image/webp' ? 'webp' : (format === 'image/png' ? 'png' : 'jpg');
+    const useHq = hqMode.checked && window.__hq && window.__hq.ready;
+
+    let done = 0;
+    for (const file of files) {
+      try {
+        const result = await resizeImage(file, maxW, maxH, keepAspect, format, quality, useHq);
+        const baseName = file.name.replace(/\.[^.]+$/, '');
+        const outName = `${baseName}-resized.${ext}`;
+        const url = URL.createObjectURL(result.blob);
+        processedBlobs.push({ name: outName, blob: result.blob, url, origSize: file.size, newSize: result.blob.size });
+        renderResult(outName, url, file.size, result.blob.size);
+      } catch (err) {
+        console.error('Failed to process', file.name, err);
+      }
+      done++;
+      progressBar.style.width = Math.round((done / files.length) * 100) + '%';
+    }
+
+    processBtn.disabled = false;
+    processBtn.textContent = 'Resize & Convert';
+    downloadAllBtn.disabled = processedBlobs.length === 0;
+    setTimeout(() => progressWrap.classList.remove('active'), 400);
+
+    if (processedBlobs.length) {
+      const totalOrig = processedBlobs.reduce((s, p) => s + p.origSize, 0);
+      const totalNew = processedBlobs.reduce((s, p) => s + p.newSize, 0);
+      const pct = totalOrig > 0 ? Math.round((1 - totalNew / totalOrig) * 100) : 0;
+      summaryPct.textContent = pct > 0 ? `−${pct}% smaller` : 'Done';
+      summaryDetail.textContent = `${processedBlobs.length} image${processedBlobs.length === 1 ? '' : 's'} · ${formatBytes(totalOrig)} → ${formatBytes(totalNew)}`;
+      summary.classList.add('active');
+    }
+  });
+
+  function resizeImage(file, maxW, maxH, keepAspect, format, quality, useHq){
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const reader = new FileReader();
+      reader.onload = e => { img.src = e.target.result; };
+      reader.onerror = reject;
+      img.onload = async () => {
+        let { width, height } = img;
+        if (keepAspect) {
+          const ratio = Math.min(maxW / width, maxH / height, 1);
+          width = Math.round(width * ratio);
+          height = Math.round(height * ratio);
+        } else {
+          width = Math.min(width, maxW);
+          height = Math.min(height, maxH);
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (format === 'image/jpeg') {
+          ctx.fillStyle = '#fff';
+          ctx.fillRect(0, 0, width, height);
+        }
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // High-quality path: real libwebp/mozjpeg WASM encoders (same as Squoosh).
+        if (useHq && (format === 'image/webp' || format === 'image/jpeg')) {
+          try {
+            const imageData = ctx.getImageData(0, 0, width, height);
+            const q = Math.round(quality * 100);
+            const buffer = format === 'image/webp'
+              ? await window.__hq.encodeWebp(imageData, { quality: q })
+              : await window.__hq.encodeJpeg(imageData, { quality: q });
+            resolve({ blob: new Blob([buffer], { type: format }) });
+            return;
+          } catch (err) {
+            console.warn('HQ encode failed, falling back to canvas encoder:', err);
+          }
+        }
+
+        canvas.toBlob(blob => {
+          if (blob) resolve({ blob });
+          else reject(new Error('toBlob failed — format may be unsupported in this browser'));
+        }, format, quality);
+      };
+      img.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function renderResult(name, url, origSize, newSize){
+    const savingsPct = origSize > 0 ? Math.round((1 - newSize / origSize) * 100) : 0;
+    const card = document.createElement('div');
+    card.className = 'result-card';
+    card.innerHTML = `
+      <div class="thumb"><img src="${url}" alt="${name}"></div>
+      <div class="result-meta">
+        <span class="name">${name}</span>
+        ${formatBytes(origSize)} → ${formatBytes(newSize)}
+        ${savingsPct > 0 ? `<span class="savings"> (−${savingsPct}%)</span>` : ''}
+      </div>
+      <div class="result-actions">
+        <button class="btn download-one">Download</button>
+      </div>
+    `;
+    card.querySelector('.download-one').addEventListener('click', () => {
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = name;
+      a.click();
+    });
+    results.appendChild(card);
+  }
+
+  downloadAllBtn.addEventListener('click', () => {
+    processedBlobs.forEach((p, i) => {
+      setTimeout(() => {
+        const a = document.createElement('a');
+        a.href = p.url;
+        a.download = p.name;
+        a.click();
+      }, i * 150);
+    });
+  });
+
+  function formatBytes(bytes){
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Shrink My Pics</title>
+<meta name="description" content="About Shrink My Pics, a free browser-based image resizing and conversion tool.">
+<style>
+  :root{ --bg:#0b0d12; --panel:#151923; --border:#262c3a; --text:#eef0f5; --muted:#9aa1b1; --accent:#6d8bff; }
+  @media (prefers-color-scheme: light){ :root{ --bg:#f3f5fb; --panel:#ffffff; --border:#e3e6f0; --text:#161a24; --muted:#666d80; --accent:#4f6bff; } }
+  body{ margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; background:var(--bg); color:var(--text); }
+  .wrap{ max-width:720px; margin:0 auto; padding:48px 20px 80px; line-height:1.6; }
+  a{ color:var(--accent); }
+  h1{ font-size:1.7rem; }
+  h2{ font-size:1.15rem; margin-top:2em; }
+  .back{ display:inline-block; margin-bottom:24px; font-size:0.9rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/">&larr; Back to Shrink My Pics</a>
+  <h1>About Shrink My Pics</h1>
+
+  <p>Shrink My Pics is a free tool for resizing and converting images to WebP, JPG, or PNG, built for anyone who needs to quickly get an image down to size — sellers prepping marketplace listings, bloggers optimizing page speed, or anyone tired of images that are needlessly huge.</p>
+
+  <h2>Why it's different</h2>
+  <p>Most "free" image tools upload your file to a server, process it, and send it back — which means your images pass through someone else's infrastructure, and the site owner pays for bandwidth on every single image. Shrink My Pics does the resizing and compression <strong>entirely in your browser</strong>, using the Canvas API and a WebAssembly build of the same compression engines (libwebp, mozjpeg) used by tools like Google's Squoosh. Nothing is ever uploaded.</p>
+
+  <h2>How it works</h2>
+  <ol>
+    <li>Drop in one or more images</li>
+    <li>Set a max width/height and pick an output format</li>
+    <li>Download the resized, compressed result — individually or all at once</li>
+  </ol>
+
+  <h2>Who built this</h2>
+  <p>Shrink My Pics is an independently run tool. See our <a href="/privacy.html">Privacy Policy</a> and <a href="/terms.html">Terms of Use</a> for more details.</p>
+</div>
+</body>
+</html>
