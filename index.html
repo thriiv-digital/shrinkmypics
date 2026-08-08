@@ -12,27 +12,28 @@
 <meta property="og:url" content="https://shrinkmypics.com/">
 <style>
   :root{
-    --bg:#0b0d12; --bg2:#0f1218; --panel:#151923; --panel2:#1b202c; --border:#262c3a;
-    --text:#eef0f5; --muted:#9aa1b1; --accent:#6d8bff; --accent2:#8f6dff; --accent-hover:#597af5;
+    --bg:#141517; --bg2:#1a1b1e; --panel:#1c1d20; --panel2:#232427; --border:#302f33;
+    --text:#eeeef0; --muted:#9b9ba1; --accent:#6d8bff; --accent2:#8f6dff; --accent-hover:#597af5;
     --good:#3ecf8e; --good-bg:rgba(62,207,142,0.12);
     --shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
   }
   @media (prefers-color-scheme: light){
     :root{
-      --bg:#f3f5fb; --bg2:#eef1f9; --panel:#ffffff; --panel2:#f7f8fc; --border:#e3e6f0;
-      --text:#161a24; --muted:#666d80; --accent:#4f6bff; --accent2:#7b4fff; --accent-hover:#3d58e8;
+      --bg:#eeeef0; --bg2:#e9e9eb; --panel:#ffffff; --panel2:#f5f5f6; --border:#dcdce0;
+      --text:#1c1c1f; --muted:#6b6b72; --accent:#4f6bff; --accent2:#7b4fff; --accent-hover:#3d58e8;
       --good:#1f9d6d; --good-bg:rgba(31,157,109,0.1);
-      --shadow: 0 10px 30px -12px rgba(30,40,80,0.18);
+      --shadow: 0 10px 30px -12px rgba(30,30,35,0.15);
     }
   }
   *{box-sizing:border-box;}
   html,body{ height:100%; }
   body{
     margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:
-      radial-gradient(900px 500px at 15% -10%, rgba(109,139,255,0.16), transparent 60%),
-      radial-gradient(700px 500px at 100% 0%, rgba(143,109,255,0.13), transparent 55%),
-      var(--bg);
+    background-color:var(--bg);
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(127,127,140,0.16) 1px, transparent 0),
+      radial-gradient(1100px 600px at 50% -12%, rgba(127,127,140,0.10), transparent 60%);
+    background-size: 26px 26px, 100% 100%;
     color:var(--text); min-height:100vh; -webkit-font-smoothing:antialiased;
   }
   header{ text-align:center; padding:64px 20px 28px; }
@@ -49,12 +50,6 @@
   }
   header p{ margin:0 auto; color:var(--muted); max-width:520px; line-height:1.5; }
   .layout{ max-width:1100px; margin:0 auto; padding:20px; display:grid; grid-template-columns:1fr; gap:22px; }
-  .ad-slot{
-    background:var(--panel); border:1px dashed var(--border); border-radius:12px;
-    display:flex; align-items:center; justify-content:center; color:var(--muted);
-    font-size:0.78rem; min-height:90px;
-  }
-  .ad-slot.top{ max-width:728px; margin:0 auto; width:100%; }
   .card{
     background:var(--panel); border:1px solid var(--border); border-radius:18px; padding:28px;
     box-shadow:var(--shadow);
@@ -129,10 +124,24 @@
   footer{ text-align:center; color:var(--muted); font-size:0.8rem; padding:36px 20px 56px; }
   .hint{ font-size:0.78rem; color:var(--muted); margin-top:16px; line-height:1.5; }
   .logo-wrap{
-    display:inline-block; background:#fff; border-radius:14px; padding:14px 22px;
+    display:inline-block; background:#fff; border-radius:18px; padding:20px 32px;
     box-shadow:var(--shadow); margin-bottom:18px;
   }
-  .logo-wrap img{ display:block; height:44px; width:auto; }
+  .logo-wrap img{ display:block; height:72px; width:auto; }
+  .content-section{ margin-top:6px; }
+  .content-section h2{ font-size:1.35rem; margin:0 0 14px; letter-spacing:-0.01em; }
+  .content-section h3{ font-size:1.05rem; margin:28px 0 10px; }
+  .content-section p{ color:var(--muted); font-size:0.95rem; line-height:1.7; margin:0 0 14px; }
+  .content-section ul, .content-section ol{ color:var(--muted); font-size:0.95rem; line-height:1.7; margin:0 0 14px; padding-left:22px; }
+  .content-section li{ margin-bottom:6px; }
+  .content-section strong{ color:var(--text); }
+  .compare-table{ width:100%; border-collapse:collapse; margin:8px 0 20px; font-size:0.88rem; }
+  .compare-table th, .compare-table td{ text-align:left; padding:10px 12px; border-bottom:1px solid var(--border); color:var(--muted); }
+  .compare-table th{ color:var(--text); font-weight:700; }
+  .compare-table td:first-child, .compare-table th:first-child{ color:var(--text); font-weight:600; }
+  .faq-item{ padding:16px 0; border-top:1px solid var(--border); }
+  .faq-item:first-of-type{ border-top:none; }
+  .faq-item p{ margin:6px 0 0; }
 </style>
 </head>
 <body>
@@ -140,12 +149,10 @@
 <header>
   <div class="logo-wrap"><img src="logo-shrinkmypics.jpg" alt="Shrink My Pics"></div>
   <h1 style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0);">Shrink My Pics</h1>
-  <p>Resize and convert to WebP, JPG, or PNG — instantly, right in your browser. Nothing is ever uploaded anywhere.</p>
+  <p>Drop in your photos, pick a size, and get back a smaller WebP, JPG, or PNG — in seconds, without uploading anything. Your images never leave your device.</p>
 </header>
 
 <div class="layout">
-  <div class="ad-slot top">Ad slot (e.g. 728×90 leaderboard)</div>
-
   <div class="card">
     <div id="dropzone">
       <span class="icon">📥</span>
@@ -204,20 +211,84 @@
     <div class="results" id="results"></div>
   </div>
 
-  <div class="ad-slot">Ad slot (e.g. 300×250 or responsive, below results)</div>
-
-  <div class="card" id="about">
-    <h2 style="margin-top:0;">About Shrink My Pics</h2>
-    <p class="hint" style="font-size:0.9rem;">
-      Shrink My Pics is a free browser-based tool for resizing and converting images to WebP, JPG, or PNG.
-      Everything runs locally using your browser's own image-processing engine and a WebAssembly build of the
-      same compression libraries (libwebp, mozjpeg) used by tools like Google's Squoosh — so your files never
-      leave your device and there's no upload wait.
+  <div class="card content-section" id="about">
+    <h2>Why Image Optimization Actually Matters</h2>
+    <p>
+      Every photo you take on a modern phone or camera is enormous by web standards — often 3-8 MB per image,
+      with dimensions far larger than any screen will actually display. When that full-size file gets uploaded
+      as-is to a website, a marketplace listing, or an email, it creates real, measurable problems:
     </p>
-    <h3 style="margin-bottom:6px;">FAQ</h3>
-    <p class="hint" style="font-size:0.9rem;"><strong>Is it really free?</strong> Yes, no signup, no limits, no watermark.</p>
-    <p class="hint" style="font-size:0.9rem;"><strong>Do you store my images?</strong> No — images are processed entirely in your browser and never uploaded to a server.</p>
-    <p class="hint" style="font-size:0.9rem;"><strong>Why is my file bigger after converting to PNG?</strong> PNG is lossless, so highly detailed photos compress worse than WebP/JPG. Use WebP or JPG for photos, PNG for graphics/screenshots with flat colors or transparency.</p>
+    <ul>
+      <li><strong>Slower page loads.</strong> Google has confirmed page speed is a ranking factor, and images are typically the single biggest contributor to page weight. A page loaded with unoptimized photos can take 5-10x longer to load than one with properly sized images.</li>
+      <li><strong>Higher bounce rates.</strong> Studies consistently show that a large share of visitors abandon a page if it takes more than 3 seconds to load — and oversized images are the most common cause of that delay.</li>
+      <li><strong>Wasted mobile data.</strong> A big share of web traffic is now mobile, often on capped data plans. Serving a 6 MB photo when a 150 KB version would look identical on a phone screen is a real cost to your visitor.</li>
+      <li><strong>Storage and bandwidth costs.</strong> Whether it's your web host, your marketplace listing limits, or your own device storage, smaller files mean more room and lower bills.</li>
+      <li><strong>Upload limits.</strong> Marketplaces, forms, and CMS platforms frequently reject files over a certain size — resizing first avoids the frustration of a failed upload.</li>
+    </ul>
+
+    <h3>How Image Resizing &amp; Compression Actually Works</h3>
+    <p>
+      "Shrinking" an image usually means two separate things happening together, and understanding the difference
+      helps you get better results:
+    </p>
+    <ul>
+      <li><strong>Resizing (dimensions).</strong> This reduces the actual pixel width and height of the image — a 4000×3000px photo becomes, say, 1200×900px. Since there are fewer total pixels to store, the file size drops dramatically. This is usually the single biggest lever: a photo doesn't need to be 4000px wide if it's only ever displayed at 800px on a webpage.</li>
+      <li><strong>Compression (quality).</strong> Separately from dimensions, formats like JPG and WebP use "lossy" compression — they selectively discard image data that's hardest for the human eye to notice, trading a small amount of visual fidelity for a much smaller file. A quality setting of 75-85% is usually visually indistinguishable from 100% but can be 3-5x smaller.</li>
+      <li><strong>Format choice.</strong> Different file formats use fundamentally different compression strategies (more on this below), so simply changing the format — with no other changes — can shrink a file significantly.</li>
+    </ul>
+    <p>
+      Shrink My Pics lets you control all three: set target dimensions, pick an output format, and adjust the quality
+      slider to balance file size against visual fidelity — then compresses everything using real WebAssembly builds
+      of libwebp and mozjpeg (the same encoders behind tools like Google's Squoosh) for results close to what a
+      professional image-optimization pipeline would produce.
+    </p>
+
+    <h3>WebP vs. JPG vs. PNG: Which Should You Use?</h3>
+    <div style="overflow-x:auto;">
+    <table class="compare-table">
+      <tr><th>Format</th><th>Best for</th><th>Compression</th><th>Transparency</th></tr>
+      <tr><td>WebP</td><td>Photos &amp; general web use</td><td>Lossy or lossless — typically 25-35% smaller than JPG at equal quality</td><td>Yes</td></tr>
+      <tr><td>JPG</td><td>Photos, maximum compatibility</td><td>Lossy — smaller than PNG for photos, larger than WebP</td><td>No</td></tr>
+      <tr><td>PNG</td><td>Screenshots, logos, graphics with flat colors or transparency</td><td>Lossless — larger files, but zero quality loss</td><td>Yes</td></tr>
+    </table>
+    </div>
+    <p>
+      As a rule of thumb: use <strong>WebP</strong> for almost everything if you can (it's supported by every modern
+      browser), fall back to <strong>JPG</strong> only if you need compatibility with very old software, and reserve
+      <strong>PNG</strong> for images that genuinely need transparency or that are mostly flat color — like logos,
+      icons, or screenshots — where lossless compression actually pays off.
+    </p>
+
+    <h3>Tips for Best Results</h3>
+    <ul>
+      <li><strong>Marketplace listings</strong> (eBay, Facebook Marketplace, Etsy, etc.) rarely need images wider than 1200-1600px — anything larger just slows down your upload and their page for no visual benefit.</li>
+      <li><strong>Website hero images</strong> typically look sharp at 1920px wide max, even on large monitors, thanks to how browsers scale images.</li>
+      <li><strong>Product thumbnails and blog images</strong> rarely need to exceed 800px wide.</li>
+      <li><strong>Social media posts</strong> are re-compressed by the platform anyway, so there's little benefit uploading anything above each platform's recommended dimensions.</li>
+      <li>When in doubt, start with <strong>quality 75-80%</strong> — it's the sweet spot where file size drops sharply but visual quality holds up under normal viewing.</li>
+    </ul>
+
+    <h2 style="margin-top:36px;">Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <strong>Is it really free?</strong>
+      <p>Yes — no signup, no usage limits, no watermark, and no account required.</p>
+    </div>
+    <div class="faq-item">
+      <strong>Do you store or see my images?</strong>
+      <p>No. Every image is processed entirely inside your own browser using JavaScript and WebAssembly. Nothing is ever uploaded to a server, which also means there's no upload wait — processing starts instantly.</p>
+    </div>
+    <div class="faq-item">
+      <strong>Why is my file bigger after converting to PNG?</strong>
+      <p>PNG uses lossless compression, so highly detailed photos compress worse than they would as WebP or JPG. Use WebP or JPG for photos, and save PNG for graphics, screenshots, or images that need transparency.</p>
+    </div>
+    <div class="faq-item">
+      <strong>What's "High-quality compression" mode?</strong>
+      <p>It routes your image through real WebAssembly builds of libwebp and mozjpeg — the same underlying compression engines used by professional tools like Google's Squoosh — instead of your browser's built-in encoder, typically producing meaningfully smaller JPG files at the same visual quality.</p>
+    </div>
+    <div class="faq-item">
+      <strong>Is there a limit on how many images I can process?</strong>
+      <p>No — process as many as you like, one at a time or in a batch. Since everything runs locally, there's no server-side queue or rate limit.</p>
+    </div>
   </div>
 </div>
 
