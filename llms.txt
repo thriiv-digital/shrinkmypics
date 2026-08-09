@@ -1,0 +1,18 @@
+# Shrink My Pics
+
+> Shrink My Pics is a free, browser-based image resizer and converter. It resizes images and converts them to WebP, JPG, or PNG entirely client-side using the Canvas API and WebAssembly builds of libwebp and mozjpeg (the same encoders behind Google's Squoosh) — no image is ever uploaded to a server, no signup is required, and there is no watermark or usage limit.
+
+## Tool
+
+- [Shrink My Pics](https://shrinkmypics.com/): Resize images by width/height and convert to WebP, JPG, or PNG, with an optional high-quality WASM compression mode. Supports batch processing of multiple images at once.
+
+## Related
+
+- [Shrink My Tools](https://shrinkmytools.com/): A companion site with 17 more free, browser-based tools — PDF merge/split/compress, QR code generator, JSON formatter, password generator, unit converter, and more.
+
+## Site Info
+
+- [About](https://shrinkmypics.com/about.html): What Shrink My Pics is and why it's built client-side.
+- [Privacy Policy](https://shrinkmypics.com/privacy.html): No images are ever uploaded or stored; third-party analytics/ad disclosures.
+- [Terms of Use](https://shrinkmypics.com/terms.html): Terms governing use of the site.
+- [Sitemap](https://shrinkmypics.com/sitemap.xml)
