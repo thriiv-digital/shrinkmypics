@@ -527,6 +527,7 @@
       summaryPct.textContent = pct > 0 ? `−${pct}% smaller` : 'Done';
       summaryDetail.textContent = `${processedBlobs.length} image${processedBlobs.length === 1 ? '' : 's'} · ${formatBytes(totalOrig)} → ${formatBytes(totalNew)}`;
       summary.classList.add('active');
+      if (typeof gtag === 'function') gtag('event', 'tool_action', { tool_name: 'shrinkmypics', action: 'convert', value: processedBlobs.length });
     }
   });
 
